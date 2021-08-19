@@ -6,6 +6,7 @@ const {
 const { CustomError } = require('../utils/customError');
 const config = require('../config');
 const User = require('../model/user');
+const { getUserLabel } = require('../utils/user')
 
 class authController {
   static async login(ctx) {
@@ -40,7 +41,13 @@ class authController {
             email,
             bio,
             blog,
-            status: 3
+            webBlogName: username + '的blog',
+            webBlog: blog,
+            webBlogIcon: avatar,
+            webBlogDesc: bio,
+            webBlogState: 0,
+            status: 3,
+            label: getUserLabel()
           }).save();
         }
         console.log('res---', res);
@@ -81,7 +88,13 @@ class authController {
         userId,
         username,
         status,
-        avatar
+        avatar,
+        webBlogName,
+        webBlog,
+        webBlogIcon,
+        webBlogDesc,
+        webBlogState,
+        label
       } = result;
       ctx.data({
         msg: '获取用户信息成功！',
@@ -90,7 +103,13 @@ class authController {
           userId,
           username,
           status,
-          avatar
+          avatar,
+          webBlogName,
+          webBlog,
+          webBlogIcon,
+          webBlogDesc,
+          webBlogState,
+          label
         }
       });
     } else {
@@ -154,6 +173,42 @@ class authController {
         msg: '获取列表数据失败'
       });
     }
+  }
+
+  static async edit(ctx) {
+    const {
+      _id,
+      webBlogName,
+      webBlog,
+      webBlogIcon,
+      webBlogDesc,
+      webBlogState,
+      label
+    } = ctx.request.body;
+    const res = await User.findOneAndUpdate({ _id }, {
+      webBlogName,
+      webBlog,
+      webBlogIcon,
+      webBlogDesc,
+      webBlogState,
+      label,
+      lastModifiedDate: new Date()
+    });
+    ctx.data({
+      data: {
+        _id,
+        userId: res.userId,
+        username: res.username,
+        status: res.status,
+        avatar: res.avatar,
+        webBlogName,
+        webBlog,
+        webBlogIcon,
+        webBlogDesc,
+        webBlogState,
+        label
+      }
+    });
   }
 }
 

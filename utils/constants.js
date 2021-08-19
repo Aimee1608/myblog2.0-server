@@ -9,5 +9,13 @@ module.exports = Object.freeze({
   },
   CUSTOM_CODE: {
     SOME_CUSTOM_ERROR: 1001
-  }
+  },
+  USER_TAG: [
+    '天然呆',
+    '小萌新',
+    '学霸',
+    '萌萌哒',
+    '技术宅',
+    '忠实粉'
+  ]
 });

@@ -4,7 +4,7 @@ const {
   githubOAth
 } = require('../config');
 
-const proxy = 'http://127.0.0.1:1087';
+// const proxy = 'http://127.0.0.1:1087';
 module.exports.getAccessToken = (code) => new Promise((reslove) => {
   console.log('result---', 9999);
   const body = {
@@ -32,7 +32,7 @@ module.exports.getAccessToken = (code) => new Promise((reslove) => {
     method: 'POST',
     json: true,
     body,
-    proxy,
+    // proxy,
     // strictSSL: false,
     headers: {
       'content-type': 'application/json',

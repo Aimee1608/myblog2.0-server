@@ -14,8 +14,8 @@ const CommentSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  leaveParentId: {
-    type: Number,
+  parentId: {
+    type: String,
     required: false
   }, // 1 开启 0 不开启
   state: {

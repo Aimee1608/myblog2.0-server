@@ -15,6 +15,7 @@
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.0.0",
     "koa-static": "^5.0.0",
+    "loadsh": "0.0.4",
     "moment": "^2.29.1",
     "mongoose": "^5.13.5",
     "mongoose-paginate": "^5.0.3",

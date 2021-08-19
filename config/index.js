@@ -7,7 +7,7 @@ module.exports = {
     url: 'https://github.com/login/oauth/access_token',
     client_id: '7dd33c1a56813db7f797',
     client_secret: 'de51eecf4d0b887ee9ddbe13019d664d09a6150f',
-    redirect_uri: 'http://localhost:8080',
+    redirect_uri: 'http://localhost:8087',
     userUrl: 'https://api.github.com/user'
   },
   jwt: {

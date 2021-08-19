@@ -4,7 +4,7 @@ const {
 const {
   decodeToken
 } = require('./token');
-
+const { USER_TAG } = require('./constants')
 const User = require('../model/user');
 
 exports.getUserInfo = async (ctx) => {
@@ -18,3 +18,8 @@ exports.getUserInfo = async (ctx) => {
   }
   return isInvalid;
 };
+
+exports.getUserLabel = () => {
+  const index = Math.floor(Math.random() * (USER_TAG.length - 1));
+  return USER_TAG[index]
+}

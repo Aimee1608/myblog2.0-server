@@ -59,6 +59,26 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  webBlogName: {
+    type: String,
+    required: false
+  },
+  webBlog: {
+    type: String,
+    required: false
+  },
+  webBlogIcon: {
+    type: String,
+    required: false
+  },
+  webBlogDesc: {
+    type: String,
+    required: false
+  },
+  label: {
+    type: String,
+    required: false
+  },
   // 发布日期
   createDate: {
     type: Date,

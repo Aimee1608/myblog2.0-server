@@ -19,6 +19,7 @@ router.get('/user/login', user.login);
 router.get('/user/logout', checkToken, user.logout);
 router.get('/user/getUserInfo', checkToken, user.getUserInfo);
 router.get('/user/getList', user.getList);
+router.post('/user/edit', checkToken, user.edit);
 
 router.get('/article/getList', article.getList);
 router.get('/article/getInfo', article.getInfo);
