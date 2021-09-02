@@ -17,5 +17,10 @@ module.exports = Object.freeze({
     '萌萌哒',
     '技术宅',
     '忠实粉'
-  ]
+  ],
+  DEFAULT_NAME: {
+    aboutme: '关于我',
+    message: '留言板',
+    friendlink: '友链'
+  }
 });

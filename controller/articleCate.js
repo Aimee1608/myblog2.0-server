@@ -64,10 +64,12 @@ class articleCateController {
   static async add(ctx) {
     // es6对象解构赋值
     const {
-      name
+      name,
+      parentId = null
     } = ctx.request.body; // 请求参数放在请求体
     const result = await new ArticleCate({
-      name
+      name,
+      parentId
     }).save()
       .catch(() => {
         throw new CustomError(500, '服务器内部错误');
@@ -85,9 +87,10 @@ class articleCateController {
 
   // 编辑活动类型
   static async edit(ctx) {
-    const _id = ctx.params.id;
     const {
-      name
+      _id,
+      name,
+      parentId = null
     } = ctx.request.body;
 
     if (!_id) {
@@ -96,7 +99,8 @@ class articleCateController {
 
     const result = await ArticleCate
       .findByIdAndUpdate(_id, {
-        name
+        name,
+        parentId
       }) // new: true ？？？
       .catch(() => {
         throw new CustomError(500, '服务器内部错误');

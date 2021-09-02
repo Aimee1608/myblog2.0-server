@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Collect = require('../model/collect');
-const Article = require('../model/article');
 const {
   isValidObjectId
 } = require('../utils/tool');
@@ -61,37 +60,26 @@ class collectController {
     const {
       userId
     } = await getUserInfo(ctx);
-    const article = await Article.findOne({ _id: id });
-    let result;
     if (value) {
       const res = await new Collect({
         userId,
         articleId: id
       }).save();
-      ++article.collectCount;
-      result = await Article.findOneAndUpdate({ _id: id }, {
-        collectCount: article.collectCount
-      });
     } else {
       const res = await Collect.findOneAndRemove({
         userId,
         articleId: id
       });
-      --article.collectCount;
-      result = await Article.findOneAndUpdate({ _id: id }, {
-        collectCount: article.collectCount
-      });
     }
-    console.log('result', result, article);
-    ctx.data({ data: article });
+    ctx.data({ data: {} });
   }
 
   static async getInfo(ctx) {
     const { id } = ctx.query;
-    // const {
-    //   userId
-    // } = await getUserInfo(ctx);
-    const userId = 'Aimee1608';
+    const {
+      userId
+    } = await getUserInfo(ctx);
+    // const userId = 'Aimee1608';
     const res = await Collect.findOne({ articleId: id, userId });
     if (res) {
       ctx.data({ data: res });

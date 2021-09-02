@@ -1,4 +1,3 @@
-// const util = require('util');
 const ERROR_MSG = require('./errorMsg');
 const constants = require('./constants');
 
@@ -20,19 +19,6 @@ class CustomError extends Error {
     };
   }
 }
-// function CustomError(code, msg) {
-//   Error.call(this, '');
-
-// }
-// util.inherits(CustomError, Error);
-
-// function HttpError(code, msg) {
-//   if (Object.values(HTTP_CODE).indexOf(code) < 0) {
-//     throw Error('not an invalid http code');
-//   }
-
-//   CustomError.call(this, code, msg);
-// }
 class HttpError extends CustomError {
   constructor(code, msg) {
     super(code, msg);
@@ -41,7 +27,6 @@ class HttpError extends CustomError {
     }
   }
 }
-// util.inherits(HttpError, CustomError);
 
 module.exports = {
   HttpError,

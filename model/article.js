@@ -22,26 +22,26 @@ const ArticleSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  likeCount: {
-    type: Number,
-    required: false,
-    default: 0
-  },
-  collectCount: {
-    type: Number,
-    required: false,
-    default: 0
-  },
-  commentCount: {
-    type: Number,
-    required: false,
-    default: 0
-  },
-  browseCount: {
-    type: Number,
-    required: false,
-    default: 0
-  },
+  // likeCount: {
+  //   type: Number,
+  //   required: false,
+  //   default: 0
+  // },
+  // collectCount: {
+  //   type: Number,
+  //   required: false,
+  //   default: 0
+  // },
+  // commentCount: {
+  //   type: Number,
+  //   required: false,
+  //   default: 0
+  // },
+  // browseCount: {
+  //   type: Number,
+  //   required: false,
+  //   default: 0
+  // },
   isRecommend: { // 是否是推荐 0 否 1是
     type: Number,
     required: false,
@@ -61,12 +61,12 @@ const ArticleSchema = new mongoose.Schema({
   // 发布日期
   createDate: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   // 最后修改日期
   lastModifiedDate: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   }
 });
 

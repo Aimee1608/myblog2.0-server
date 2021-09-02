@@ -18,12 +18,12 @@ const ArticleCateSchema = new mongoose.Schema({
   // 发布日期
   createDate: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   // 最后修改日期
   lastModifiedDate: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   }
 });
 ArticleCateSchema.plugin(mongoosePaginate);

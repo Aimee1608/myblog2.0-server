@@ -45,3 +45,17 @@ const flatten = (arr) => (
   arr.reduce((result, item) => result.concat(Array.isArray(item) ? flatten(item) : item), [])
 );
 exports.flatten = flatten;
+
+exports.getArticleTime = (arr) => {
+  const Obj = {};
+  arr.forEach((item) => {
+    const year = Moment(item.createDate).format('YYYY');
+    if (Obj[year]) {
+      Obj[year].push(item);
+    } else {
+      Obj[year] = [item];
+    }
+  });
+  const list = Object.keys(Obj).map((item) => ({ year: item, list: Obj[item] }));
+  return list;
+};

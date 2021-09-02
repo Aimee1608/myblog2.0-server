@@ -13,7 +13,7 @@ const LikeSchema = new mongoose.Schema({
   // 发布日期
   createDate: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   }
 });
 

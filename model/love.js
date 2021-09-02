@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 
-const CollectSchema = new mongoose.Schema({
+const LoveSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true
   },
-  articleId: {
+  logId: {
     type: String,
     required: false
   },
@@ -17,5 +17,5 @@ const CollectSchema = new mongoose.Schema({
   }
 });
 
-CollectSchema.plugin(mongoosePaginate);
-module.exports = mongoose.model('collect', CollectSchema, 'collect');
+LoveSchema.plugin(mongoosePaginate);
+module.exports = mongoose.model('love', LoveSchema, 'love');

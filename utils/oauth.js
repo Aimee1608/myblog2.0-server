@@ -5,7 +5,7 @@ const {
 } = require('../config');
 
 // const proxy = 'http://127.0.0.1:1087';
-module.exports.getAccessToken = (code) => new Promise((reslove) => {
+module.exports.getAccessToken = (code) => new Promise((resolve) => {
   console.log('result---', 9999);
   const body = {
     client_id: githubOAth.client_id,
@@ -26,7 +26,7 @@ module.exports.getAccessToken = (code) => new Promise((reslove) => {
   //   }
   // })
   // console.log('res', res)
-  // reslove(res.data)
+  // resolve(res.data)
   request({
     url: githubOAth.url,
     method: 'POST',
@@ -43,19 +43,19 @@ module.exports.getAccessToken = (code) => new Promise((reslove) => {
     try {
       // const result = data;
       if (data && !data.error) {
-        reslove(data);
+        resolve(data);
       } else {
-        reslove(false);
+        resolve(false);
       }
     } catch (err) {
-      reslove(false);
+      resolve(false);
     }
   });
 });
 
 module.exports.getUserInfo = ({ access_token, token_type }) => {
   console.log(`${token_type} ${access_token}`);
-  return new Promise(async (reslove) => {
+  return new Promise(async (resolve) => {
     const res = await axios({
       method: 'GET',
       url: githubOAth.userUrl,
@@ -69,9 +69,9 @@ module.exports.getUserInfo = ({ access_token, token_type }) => {
     });
     console.log('res----', res);
     if (res.data && !res.data.error) {
-      reslove(res.data);
+      resolve(res.data);
     } else {
-      reslove(false);
+      resolve(false);
     }
     // request({
     //   method: 'GET',
@@ -85,12 +85,12 @@ module.exports.getUserInfo = ({ access_token, token_type }) => {
     //   console.log('data--user', data, error)
     //   try {
     //     if (data && !data.error) {
-    //       reslove(data);
+    //       resolve(data);
     //     } else {
-    //       reslove(false)
+    //       resolve(false)
     //     }
     //   } catch (err) {
-    //     reslove(false)
+    //     resolve(false)
     //   }
     // })
   });

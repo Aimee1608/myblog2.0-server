@@ -75,6 +75,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  webBlogState: {
+    type: Number,
+    required: false,
+    default: 0 // 0 不推送  1推送
+  },
   label: {
     type: String,
     required: false
@@ -82,16 +87,16 @@ const userSchema = new mongoose.Schema({
   // 发布日期
   createDate: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   // 最后修改日期
   lastModifiedDate: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   lastLoginDate: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   status: {
     type: Number,

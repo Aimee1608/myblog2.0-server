@@ -6,11 +6,11 @@ const {
 const { CustomError } = require('../utils/customError');
 const config = require('../config');
 const User = require('../model/user');
-const { getUserLabel } = require('../utils/user')
+const { getUserLabel, isAdminUser } = require('../utils/user');
 
 class authController {
   static async login(ctx) {
-    const { code } = ctx.query;
+    const { code, state } = ctx.query;
     console.log('code----', code);
     const token = await getAccessToken(code);
     console.log('token', token);
@@ -41,7 +41,7 @@ class authController {
             email,
             bio,
             blog,
-            webBlogName: username + '的blog',
+            webBlogName: `${username}的blog`,
             webBlog: blog,
             webBlogIcon: avatar,
             webBlogDesc: bio,
@@ -57,7 +57,16 @@ class authController {
             userId: res.userId
           });
           setTokenCookie(ctx, jwtToken);
-          ctx.redirect(config.githubOAth.redirect_uri);
+          if (state === 'admin') {
+            ctx.redirect(config.githubOAth.redirect_admin);
+          } else if (state === 'blog') {
+            ctx.redirect(config.githubOAth.redirect_uri);
+          } else {
+            ctx.data({
+              code: constants.HTTP_CODE.UNAUTHORIZED,
+              msg: '未知站点'
+            });
+          }
           return;
         }
       }
@@ -209,6 +218,35 @@ class authController {
         label
       }
     });
+  }
+
+  static async editRole(ctx) {
+    const {
+      _id,
+      status
+    } = ctx.request.body;
+
+    await isAdminUser(ctx);
+
+    const res = await User.findOneAndUpdate({ _id }, { status });
+    console.log('res---', res);
+    ctx.data({
+      data: res
+    });
+  }
+
+  static async getWebBlogUser(ctx) {
+    const res = await User.find({ webBlogState: 1 }, {
+      avatar: 1,
+      username: 1,
+      userId: 1,
+      webBlogName: 1,
+      webBlog: 1,
+      webBlogIcon: 1,
+      webBlogDesc: 1,
+      webBlogState: 1
+    });
+    ctx.data({ data: res });
   }
 }
 

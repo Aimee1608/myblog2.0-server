@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Like = require('../model/like');
-const Article = require('../model/article');
 const {
   isValidObjectId
 } = require('../utils/tool');
@@ -58,32 +57,22 @@ class likeController {
   static async edit(ctx) {
     const { id, value } = ctx.request.body;
     console.log('id', id, value);
-    // const {
-    //   userId
-    // } = await getUserInfo(ctx);
-    const userId = 'Aimee1608';
-    const article = await Article.findOne({ _id: id });
-    let result;
+    const {
+      userId
+    } = await getUserInfo(ctx);
+    // const userId = 'Aimee1608';
     if (value) {
       const res = await new Like({
         userId,
         articleId: id
       }).save();
-      ++article.likeCount;
-      result = await Article.findOneAndUpdate({ _id: id }, {
-        likeCount: article.likeCount
-      });
     } else {
       const res = await Like.findOneAndRemove({
         userId,
         articleId: id
       });
-      --article.likeCount;
-      result = await Article.findOneAndUpdate({ _id: id }, {
-        likeCount: article.likeCount
-      });
     }
-    ctx.data({ data: article });
+    ctx.data({ data: {} });
   }
 
   static async getInfo(ctx) {
