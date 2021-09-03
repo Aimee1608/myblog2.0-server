@@ -5,6 +5,7 @@ node_modules/
 package-lock.json
 yarn.lock
 coverage/
+public/
 .idea/
 run/
 .DS_Store

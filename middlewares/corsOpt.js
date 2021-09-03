@@ -17,8 +17,8 @@ module.exports = async (ctx, next) => {
     'Access-Control-Allow-Credentials': true,
     'Access-Control-Allow-Headers': 'Authorization, Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With',
     'Access-Control-Allow-Methods': 'PUT,PATCH,POST,GET,DELETE,OPTIONS',
-    'Access-Control-Max-Age': '1728000',
-    'Content-Type': 'application/json;charset=utf-8'
+    'Access-Control-Max-Age': '1728000'
+    // 'Content-Type': 'application/json;charset=utf-8'
   });
 
   // Form Data简单请求不会发起OPTIONS请求

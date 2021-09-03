@@ -4,9 +4,9 @@ const {
   githubOAth
 } = require('../config');
 
-// const proxy = 'http://127.0.0.1:1087';
+const proxy = 'http://127.0.0.1:1087';
 module.exports.getAccessToken = (code) => new Promise((resolve) => {
-  console.log('result---', 9999);
+  // console.log('result---', 9999);
   const body = {
     client_id: githubOAth.client_id,
     client_secret: githubOAth.client_secret,

@@ -90,7 +90,7 @@ class authController {
     }).exec().catch(() => {
       throw new CustomError(500, '服务器内部错误');
     });
-    console.log('result', result);
+    // console.log('result', result);
     if (result) {
       const {
         _id,

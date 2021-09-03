@@ -23,5 +23,6 @@ module.exports = {
     user: '',
     password: '',
     rs_name: ''
-  }
+  },
+  baseUploadUrl: 'http://localhost:8899/resource/'
 };

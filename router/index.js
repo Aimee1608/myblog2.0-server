@@ -15,7 +15,7 @@ const collect = require('../controller/collect');
 const like = require('../controller/like');
 const comment = require('../controller/comment');
 const love = require('../controller/love');
-const uploader = require('../controller/upload');
+const resource = require('../controller/resource');
 const { upload } = require('../utils/upload');
 
 router.get('/user/login', user.login);
@@ -51,6 +51,9 @@ router.get('/comment/getTopComment', comment.getTopComment);
 
 router.post('/love/add', love.add);
 
-router.post('/upload/add', checkToken, upload.single('face'), uploader.add);
+router.get('/resource/getList', checkToken, resource.getList);
+router.post('/resource/add', checkToken, resource.add);
+// router.post('/resource/upload', checkToken, upload.single('face'), resource.upload);
+router.post('/resource/upload', checkToken, resource.upload);
 
 module.exports = router;
