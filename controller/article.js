@@ -100,7 +100,7 @@ class articleController {
         }];
       }
     }
-    console.log(888, querys.$or);
+    // console.log(888, querys.$or);
     if (+like) {
       querys.$and = await getUserArticleList(ctx, Like);
     }

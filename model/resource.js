@@ -7,6 +7,10 @@ const resourceSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  md5Name: {
+    type: String,
+    required: false
+  },
   url: {
     type: String,
     required: true

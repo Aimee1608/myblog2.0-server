@@ -201,8 +201,9 @@ class authController {
       webBlogDesc,
       webBlogState,
       label,
-      lastModifiedDate: new Date()
+      lastModifiedDate: Date.now()
     });
+    console.log('res--', res);
     ctx.data({
       data: {
         _id,

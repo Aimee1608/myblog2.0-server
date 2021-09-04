@@ -19,7 +19,7 @@ class articleCateController {
       page: Number(currentPage), // 当前页
       limit: Number(pageSize) // 每页数
     };
-    console.log('88888');
+    // console.log('88888');
     // 查询
     const result = await ArticleCate
       .paginate({}, options)

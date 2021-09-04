@@ -20,7 +20,7 @@ mongodb();
 app.use(corsOpt);
 app.use(koaBody({
   multipart: true,
-  encoding: 'gzip',
+  // encoding: 'gzip',
   formidable: {
     uploadDir: path.join(__dirname, 'public/resource'), // 设置文件上传目录
     keepExtensions: true, // 保持文件的后缀

@@ -23,7 +23,7 @@ class resourceController {
       page: Number(currentPage), // 当前页
       limit: Number(pageSize) // 每页数
     };
-    console.log('88888', pageSize, ctx.query);
+    // console.log('88888', pageSize, ctx.query);
     const query = { userId };
     // 查询
     const result = await Resource
@@ -153,6 +153,7 @@ class resourceController {
     const result = await new Resource({
       userId,
       name,
+      md5Name: file.name,
       url: path
     }).save();
 
