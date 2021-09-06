@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 
-const ArticleCateSchema = new mongoose.Schema({
+const TagsSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
+  },
+  classId: {
+    type: String,
+    required: false
   },
   state: {
     type: Number,
@@ -22,5 +26,5 @@ const ArticleCateSchema = new mongoose.Schema({
     default: Date.now
   }
 });
-ArticleCateSchema.plugin(mongoosePaginate);
-module.exports = mongoose.model('articleCate', ArticleCateSchema, 'articleCate');
+TagsSchema.plugin(mongoosePaginate);
+module.exports = mongoose.model('tags', TagsSchema, 'tags');

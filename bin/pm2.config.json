@@ -1,0 +1,9 @@
+{
+  "apps": [{
+    "name": "blog-server",
+    "script": "./index.js",
+    "instances": 4,
+    "watch": false,
+    "exec_mode": "cluster_mode"
+  }]
+}

@@ -22,6 +22,11 @@ const ArticleSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  tags: {
+    type: Array,
+    required: false,
+    default: []
+  },
   // likeCount: {
   //   type: Number,
   //   required: false,

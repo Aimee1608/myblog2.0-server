@@ -1,5 +1,5 @@
 // 活动类型控制器
-const ArticleCate = require('../model/articleCate');
+const Tags = require('../model/tags');
 
 const {
   CustomError
@@ -21,7 +21,7 @@ class articleCateController {
     };
     // console.log('88888');
     // 查询
-    const result = await ArticleCate
+    const result = await Tags
       .paginate({}, options)
       .catch(() => {
         throw new CustomError(500, '服务器内部错误');
@@ -45,7 +45,7 @@ class articleCateController {
   }
 
   static async getAllList(ctx) {
-    const result = await ArticleCate.find()
+    const result = await Tags.find()
       .catch(() => {
         throw new CustomError(500, '服务器内部错误');
       });
@@ -64,10 +64,12 @@ class articleCateController {
   static async add(ctx) {
     // es6对象解构赋值
     const {
-      name
+      name,
+      classId
     } = ctx.request.body; // 请求参数放在请求体
-    const result = await new ArticleCate({
-      name
+    const result = await new Tags({
+      name,
+      classId
     }).save()
       .catch(() => {
         throw new CustomError(500, '服务器内部错误');
@@ -88,17 +90,17 @@ class articleCateController {
     const {
       _id,
       name,
-      state
+      classId
     } = ctx.request.body;
 
     if (!_id) {
       throw new CustomError(500, '无效参数');
     }
 
-    const result = await ArticleCate
+    const result = await Tags
       .findByIdAndUpdate(_id, {
         name,
-        state
+        classId
       }) // new: true ？？？
       .catch(() => {
         throw new CustomError(500, '服务器内部错误');
@@ -121,7 +123,7 @@ class articleCateController {
     if (!_id) {
       throw new CustomError(500, '无效参数');
     }
-    const result = await ArticleCate
+    const result = await Tags
       .findByIdAndRemove(_id)
       .catch(() => {
         throw new CustomError(500, '服务器内部错误');

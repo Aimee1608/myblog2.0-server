@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env NODE_ENV=dev nodemon index.js"
+    "start": "cross-env NODE_ENV=dev nodemon index.js",
+    "start:prod": "cross-env NODE_ENV=prod nodemon index.js",
+    "pm2:dev": "cross-env NODE_ENV=prod NODE_LOG_DIR=/tmp ENABLE_NODE_LOG=YES pm2-docker start ./bin/pm2.config.json",
+    "pm2:prod": "cross-env NODE_ENV=prod NODE_LOG_DIR=/tmp ENABLE_NODE_LOG=YES pm2-docker start ./bin/pm2.config.json"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
@@ -14,7 +17,6 @@
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
-    "koa-bodyparser": "^4.3.0",
     "koa-logger": "^3.2.1",
     "koa-multer": "^1.0.2",
     "koa-router": "^10.0.0",
@@ -24,9 +26,8 @@
     "moment": "^2.29.1",
     "mongoose": "^5.13.5",
     "mongoose-paginate": "^5.0.3",
-    "multer": "^1.4.3",
-    "request": "^2.88.2",
-    "util": "^0.12.4"
+    "pm2": "^5.1.1",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

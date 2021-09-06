@@ -16,7 +16,7 @@ const like = require('../controller/like');
 const comment = require('../controller/comment');
 const love = require('../controller/love');
 const resource = require('../controller/resource');
-const { upload } = require('../utils/upload');
+const tags = require('../controller/tags');
 
 router.get('/user/login', user.login);
 router.get('/user/logout', checkToken, user.logout);
@@ -55,5 +55,10 @@ router.get('/resource/getList', checkToken, resource.getList);
 router.post('/resource/add', checkToken, resource.add);
 // router.post('/resource/upload', checkToken, upload.single('face'), resource.upload);
 router.post('/resource/upload', checkToken, resource.upload);
+
+router.get('/tags/getList', tags.getList);
+router.get('/tags/getAllList', tags.getAllList);
+router.post('/tags/add', checkToken, tags.add);
+router.post('/tags/edit', checkToken, tags.edit);
 
 module.exports = router;

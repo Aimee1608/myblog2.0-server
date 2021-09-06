@@ -11,33 +11,15 @@ const {
 const Browse = require('../model/browse');
 const { decodeToken } = require('../utils/token');
 const { getLogId, getUserInfo } = require('../utils/user');
+const Tags = require('../model/tags');
 
-function getAllClassId(classId, list) {
-  let newList = [];
-  list.forEach((item) => {
-    if (item._id === classId) {
-      newList.push(item._id);
-    } else if (item.parentId === classId) {
-      newList.push(item._id);
-    }
-    if (item.children && item.children.length > 0) {
-      const children = getAllClassId(classId, item.children);
-      newList = newList.concat(children);
-    }
-  });
-  return newList;
-}
-
-async function getClassId(classId) {
+async function getClassId() {
   const list = [];
-  const parent = await ArticleCate.find({ parentId: classId });
+  const parent = await ArticleCate.find({ state: 1 });
   if (parent.length > 0) {
     for (let i = 0; i < parent.length; i++) {
       const item = JSON.parse(JSON.stringify(parent[i]));
-      item.children = await getClassId(item._id);
-      const ids = getAllClassId(item._id, item.children);
-      ids.push(item._id);
-      item.count = await Article.countDocuments({ classId: { $in: ids } });
+      item.count = await Article.countDocuments({ classId: item._id });
       list.push(item);
     }
   }
@@ -128,12 +110,15 @@ class articleController {
   }
 
   static async add(ctx) {
-    const { title, classId, content } = ctx.request.body;
+    const {
+      title, classId, content, tags = []
+    } = ctx.request.body;
     console.log('title', title, content);
     const res = await new Article({
       title,
       content,
       classId,
+      tags,
       image: 'https://tpc.googlesyndication.com/simgad/15117929136808882740/downsize_200k_v1?w=400&h=209'
     }).save();
     ctx.data({ data: res });
@@ -177,25 +162,29 @@ class articleController {
 
   static async getListByClass(ctx) {
     const {
-      classId = null
+      classId = null,
+      tagsId = null
     } = ctx.query;
     const query = {};
-
-    const classList = await getClassId(null);
+    const classList = await getClassId();
+    const tags = await Tags.find({ state: 1, classId });
     if (classId) { // 找到分类id 下面的子分类id
-      const list = getAllClassId(classId, classList);
-      console.log('list---', list);
-      query.classId = {
-        $in: list
+      query.classId = classId;
+    }
+    if (tagsId) {
+      query.tags = {
+        $elemMatch: {
+          $eq: tagsId
+        }
       };
     }
-
     const res = await Article.find(query, { createDate: 1, title: 1 }, { sort: { createDate: -1 } });
     console.log('articleList---', res, classId);
     const articleList = getArticleTime(res);
     ctx.data({
       data: {
         classList,
+        tags,
         articleList
       }
     });
