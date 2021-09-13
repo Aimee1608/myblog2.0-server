@@ -19,6 +19,7 @@ module.exports = Object.freeze({
     '忠实粉'
   ],
   DEFAULT_NAME: {
+    reward: '赞赏',
     aboutme: '关于我',
     message: '留言板',
     friendlink: '友链'
