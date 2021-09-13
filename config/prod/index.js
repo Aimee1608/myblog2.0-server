@@ -19,10 +19,10 @@ module.exports = {
   },
   mongo: {
     host: '127.0.0.1',
-    database: 'aimeeBlog',
+    database: 'aimeeblog',
     port: 27017,
-    user: '',
-    password: '',
+    user: 'aimee',
+    password: 'small_root',
     rs_name: ''
   },
   baseUploadUrl: 'http://aimeeserver.mangoya.cn/resource/'
