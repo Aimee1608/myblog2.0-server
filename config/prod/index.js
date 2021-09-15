@@ -5,8 +5,8 @@ module.exports = {
   LIMIT: 16,
   githubOAth: {
     url: 'https://github.com/login/oauth/access_token',
-    client_id: '7dd33c1a56813db7f797',
-    client_secret: 'de51eecf4d0b887ee9ddbe13019d664d09a6150f',
+    client_id: '7a79cb87ff58020bc1ff',
+    client_secret: 'db7a2b1e41ffc6a65f487f40e583011393b59d1e',
     redirect_uri: 'http://aimeeblog.mangoya.cn',
     redirect_admin: 'http://aimeeadmin.mangoya.cn',
     userUrl: 'https://api.github.com/user',
