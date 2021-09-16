@@ -49,48 +49,6 @@ class resourceController {
     }
   }
 
-  // 新增活动类型
-  static async add(ctx) {
-    // es6对象解构赋值
-    const {
-      files
-    } = ctx.request.body; // 请求参数放在请求体
-    const {
-      userId
-    } = await getUserInfo(ctx);
-    const list = JSON.parse(files);
-    console.log('files', files, list);
-    const rList = list.map((file) => (
-      new Promise(async (reslove) => {
-        const { name, md5Name } = file;
-        const url = `https://editor.xesimg.com/tailor/logadmin/resource/${md5Name}`;
-        const res = await new Resource({
-          userId,
-          name,
-          url,
-          // 发布日期
-          createDate: new Date(),
-          // 最后修改日期
-          lastModifiedDate: new Date()
-        })
-          .save()
-          .catch(() => {
-            throw new CustomError(500, '服务器内部错误');
-          });
-        reslove(res);
-      })
-
-    ));
-    const result = await Promise.all(rList);
-    if (result) {
-      ctx.data({
-        data: result
-      });
-    } else {
-      ctx.data({ code: 1001 });
-    }
-  }
-
   // 编辑活动类型
   static async edit(ctx) {
     const _id = ctx.params.id;

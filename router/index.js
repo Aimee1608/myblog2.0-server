@@ -58,7 +58,6 @@ router.get('/comment/getAllList', comment.getAllList);
 router.post('/love/add', love.add);
 
 router.get('/resource/getList', checkToken, resource.getList);
-router.post('/resource/add', checkToken, resource.add);
 // router.post('/resource/upload', checkToken, upload.single('face'), resource.upload);
 router.post('/resource/upload', checkToken, resource.upload);
 

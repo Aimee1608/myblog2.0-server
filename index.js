@@ -22,7 +22,7 @@ app.use(koaBody({
   multipart: true,
   // encoding: 'gzip',
   formidable: {
-    uploadDir: path.join(__dirname, 'public/resource'), // 设置文件上传目录
+    uploadDir: path.join(__dirname, 'public/resources'), // 设置文件上传目录
     keepExtensions: true, // 保持文件的后缀
     maxFieldsSize: 2 * 1024 * 1024, // 文件上传大小
     hash: 'md5',
@@ -30,7 +30,7 @@ app.use(koaBody({
       // console.log(`name: ${name}`);
       // console.log(file);
       const md5Name = getUploadFileName(file.name);
-      const dir = path.join(__dirname, 'public/resource');
+      const dir = path.join(__dirname, 'public/resources');
       checkDirExist(dir);
       // console.log('{file.hash', file.hash);
       file.name = md5Name;

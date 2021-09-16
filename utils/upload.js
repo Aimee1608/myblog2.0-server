@@ -3,12 +3,12 @@ const path = require('path');
 const fs = require('fs');
 const md5 = require('md5');
 
-const commonPath = 'public/resource/';
+const commonPath = 'public/resources/';
 // 配置
 const storage = multer.diskStorage({
   // 文件保存路径
   destination(req, file, cb) {
-    cb(null, 'public/resource/'); // 注意路径必须存在
+    cb(null, 'public/resources/'); // 注意路径必须存在
   },
   // 修改文件名称
   filename(req, file, cb) {

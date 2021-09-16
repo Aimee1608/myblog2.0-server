@@ -25,5 +25,5 @@ module.exports = {
     password: 'small_root',
     rs_name: ''
   },
-  baseUploadUrl: 'http://mangoya.cn/v1/resource/'
+  baseUploadUrl: 'http://mangoya.cn/v1/resources/'
 };
