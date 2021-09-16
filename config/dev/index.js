@@ -18,7 +18,7 @@ module.exports = {
   },
   mongo: {
     host: '127.0.0.1',
-    database: 'aimeeTest',
+    database: 'aimeeTest2',
     port: 27037,
     user: '',
     password: '',

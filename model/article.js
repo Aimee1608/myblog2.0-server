@@ -10,10 +10,10 @@ const ArticleSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  image: {
-    type: String,
-    required: true
-  },
+  // image: {
+  //   type: String,
+  //   required: false
+  // },
   // description: {
   //   type: String,
   //   required: false
@@ -27,26 +27,6 @@ const ArticleSchema = new mongoose.Schema({
     required: false,
     default: []
   },
-  // likeCount: {
-  //   type: Number,
-  //   required: false,
-  //   default: 0
-  // },
-  // collectCount: {
-  //   type: Number,
-  //   required: false,
-  //   default: 0
-  // },
-  // commentCount: {
-  //   type: Number,
-  //   required: false,
-  //   default: 0
-  // },
-  // browseCount: {
-  //   type: Number,
-  //   required: false,
-  //   default: 0
-  // },
   isRecommend: { // 是否是推荐 0 否 1是
     type: Number,
     required: false,

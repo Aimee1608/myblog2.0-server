@@ -4,6 +4,7 @@ const ArticleCate = require('../model/articleCate');
 const {
   CustomError
 } = require('../utils/customError');
+const { isAdminUser } = require('../utils/user');
 
 class articleCateController {
   // 获取活动类型列表
@@ -117,10 +118,13 @@ class articleCateController {
 
   // 删除活动类型
   static async delete(ctx) {
-    const _id = ctx.params.id;
+    const {
+      _id
+    } = ctx.request.body;
     if (!_id) {
       throw new CustomError(500, '无效参数');
     }
+    await isAdminUser(ctx);
     const result = await ArticleCate
       .findByIdAndRemove(_id)
       .catch(() => {

@@ -22,6 +22,6 @@ module.exports = Object.freeze({
     reward: '赞赏',
     aboutme: '关于我',
     message: '留言板',
-    friendlink: '友链'
+    friendslink: '友链'
   }
 });

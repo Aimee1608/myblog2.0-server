@@ -1,11 +1,12 @@
-const _ = require('loadsh');
-const Like = require('../model/like');
 const Comment = require('../model/comment');
 const User = require('../model/user');
 const {
   isValidObjectId
 } = require('../utils/tool');
 const { getUserInfo, isAdminUser } = require('../utils/user');
+const {
+  CustomError
+} = require('../utils/customError');
 const {
   decodeToken
 } = require('../utils/token');
@@ -55,7 +56,13 @@ class CommentController {
       limit: Number(pageSize) // 每页数
     };
     // 参数
-    const querys = { state, articleId, parentId: null };
+    const querys = {
+      state,
+      articleId,
+      parentId: {
+        $in: [null, '']
+      }
+    };
     // const querys = {};
     const result = await Comment
       .paginate(querys, options);
@@ -182,6 +189,30 @@ class CommentController {
     });
   }
 
+  static async delete(ctx) {
+    const {
+      _id
+    } = ctx.request.body;
+    if (!isValidObjectId(_id)) {
+      throw new CustomError(500, '无效参数');
+    }
+    await isAdminUser(ctx);
+    const result = await Comment
+      .findByIdAndRemove(_id)
+      .catch(() => {
+        throw new CustomError(500, '服务器内部错误');
+      });
+    if (result) {
+      ctx.data({
+        data: result
+      });
+    } else {
+      ctx.data({
+        code: 500
+      });
+    }
+  }
+
   static async getTopComment(ctx) {
     const options = {
       sort: {
@@ -241,6 +272,11 @@ class CommentController {
         loveCount
       }
     });
+  }
+
+  static async getAllList(ctx) {
+    const result = await Comment.find();
+    ctx.data({ data: result });
   }
 }
 module.exports = CommentController;

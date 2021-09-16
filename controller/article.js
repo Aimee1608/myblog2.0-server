@@ -10,8 +10,13 @@ const {
 } = require('../utils/tool');
 const Browse = require('../model/browse');
 const { decodeToken } = require('../utils/token');
-const { getLogId, getUserInfo } = require('../utils/user');
+const { getLogId, getUserInfo, isAdminUser } = require('../utils/user');
 const Tags = require('../model/tags');
+const Love = require('../model/love');
+const User = require('../model/user');
+const {
+  CustomError
+} = require('../utils/customError');
 
 async function getClassId() {
   const list = [];
@@ -147,11 +152,14 @@ class articleController {
       userId = userInfo.userId;
     }
     const logId = getLogId(ctx);
-    await new Browse({
-      articleId: id,
-      userId,
-      logId
-    }).save();
+    const hasBrowse = await Browse.find({ logId, articleId: id });
+    if (!hasBrowse) {
+      await new Browse({
+        articleId: id,
+        userId,
+        logId
+      }).save();
+    }
     const counts = await getCountById(id);
     ctx.data({
       data: {
@@ -188,6 +196,45 @@ class articleController {
         articleList
       }
     });
+  }
+
+  static async getHomeInfo(ctx) {
+    const article = await Article.countDocuments();
+    const love = await Love.countDocuments();
+    const comment = await Comment.countDocuments();
+    const user = await User.countDocuments();
+    ctx.data({
+      data: {
+        article,
+        love,
+        comment,
+        user
+      }
+    });
+  }
+
+  static async delete(ctx) {
+    const {
+      _id
+    } = ctx.request.body;
+    if (!isValidObjectId(_id)) {
+      throw new CustomError(500, '无效参数');
+    }
+    await isAdminUser(ctx);
+    const result = await Article
+      .findByIdAndRemove(_id)
+      .catch(() => {
+        throw new CustomError(500, '服务器内部错误');
+      });
+    if (result) {
+      ctx.data({
+        data: result
+      });
+    } else {
+      ctx.data({
+        code: 500
+      });
+    }
   }
 }
 module.exports = articleController;

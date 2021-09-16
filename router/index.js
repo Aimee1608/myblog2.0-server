@@ -29,13 +29,16 @@ router.get('/user/getWebBlogUser', user.getWebBlogUser);
 router.get('/article/getList', article.getList);
 router.get('/article/getListByClass', article.getListByClass);
 router.get('/article/getInfo', article.getInfo);
-router.post('/article/add', article.add);
-router.post('/article/edit', article.edit);
+router.post('/article/add', checkToken, article.add);
+router.post('/article/edit', checkToken, article.edit);
+router.post('/article/delete', checkToken, article.delete);
+router.get('/article/getHomeInfo', article.getHomeInfo);
 
 router.get('/articleCate/getList', articleCate.getList);
 router.get('/articleCate/getAllList', articleCate.getAllList);
 router.post('/articleCate/add', checkToken, articleCate.add);
 router.post('/articleCate/edit', checkToken, articleCate.edit);
+router.post('/articleCate/delete', checkToken, articleCate.delete);
 
 router.post('/collect/edit', collect.edit);
 router.get('/collect/getInfo', collect.getInfo);
@@ -48,6 +51,9 @@ router.get('/comment/getAdminList', comment.getAdminList);
 router.post('/comment/add', comment.add);
 router.post('/comment/edit', checkToken, comment.edit);
 router.get('/comment/getTopComment', comment.getTopComment);
+router.post('/comment/delete', checkToken, comment.delete);
+
+router.get('/comment/getAllList', comment.getAllList);
 
 router.post('/love/add', love.add);
 
@@ -60,5 +66,6 @@ router.get('/tags/getList', tags.getList);
 router.get('/tags/getAllList', tags.getAllList);
 router.post('/tags/add', checkToken, tags.add);
 router.post('/tags/edit', checkToken, tags.edit);
+router.post('/tags/delete', checkToken, tags.delete);
 
 module.exports = router;
