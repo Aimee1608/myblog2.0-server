@@ -1,44 +1,7 @@
-const multer = require('koa-multer');
 const path = require('path');
 const fs = require('fs');
 const md5 = require('md5');
-
-const commonPath = 'public/resources/';
-// 配置
-const storage = multer.diskStorage({
-  // 文件保存路径
-  destination(req, file, cb) {
-    cb(null, 'public/resources/'); // 注意路径必须存在
-  },
-  // 修改文件名称
-  filename(req, file, cb) {
-    const fileFormat = (file.originalname).split('.');
-    cb(null, `${Date.now()}.${fileFormat[fileFormat.length - 1]}`);
-  }
-});
-
-// 加载配置
-const upload = multer({ storage });
-module.exports.upload = upload;
-
-module.exports.upload2 = (ctx) => {
-  const fileName = ctx.request.body.name;
-  const { file } = ctx.request.files;
-  // 创建可读流
-  const render = fs.createReadStream(file.path);
-  const filePath = path.join(commonPath, `${fileName}.${file.name.split('.').pop()}`);
-  const fileDir = path.join(commonPath);
-  if (!fs.existsSync(fileDir)) {
-    fs.mkdirSync(fileDir, (err) => {
-      console.log(err);
-      console.log('创建失败');
-    });
-  }
-  // 创建写入流
-  const upStream = fs.createWriteStream(filePath);
-  render.pipe(upStream);
-  return { fileName };
-};
+const Moment = require('moment');
 
 module.exports.getUploadFileName = (name) => {
   const ext = name.split('.');
@@ -53,4 +16,15 @@ module.exports.checkDirExist = (p) => {
   if (!fs.existsSync(p)) {
     fs.mkdirSync(p);
   }
+};
+
+module.exports.getTimeDir = () => {
+  const time = Moment().format('YYYY-MM-DD');
+  const dir = path.resolve('../public/resources', time);
+  return dir;
+};
+
+module.exports.getDir = () => {
+  const dir = path.resolve(__dirname, '../public/resources');
+  return dir;
 };

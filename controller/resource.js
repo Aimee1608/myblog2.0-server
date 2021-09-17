@@ -1,6 +1,7 @@
 // 活动类型控制器
+const Moment = require('moment');
 const Resource = require('../model/resource');
-const { getUserInfo } = require('../utils/user');
+const { getUserInfo, isAdminUser } = require('../utils/user');
 const {
   CustomError
 } = require('../utils/customError');
@@ -79,10 +80,13 @@ class resourceController {
 
   // 删除活动类型
   static async delete(ctx) {
-    const _id = ctx.params.id;
+    const {
+      _id
+    } = ctx.request.body;
     if (!_id) {
       throw new CustomError(500, '无效参数');
     }
+    await isAdminUser(ctx);
     const result = await Resource
       .findByIdAndRemove(_id)
       .catch(() => {
@@ -100,11 +104,12 @@ class resourceController {
   static async upload(ctx) {
     // const { filename } = ctx.req.file;
     // console.log('ctx---upload', ctx.request.body);
-    console.log('ctx---upload--req', ctx.request.files);
+    // console.log('ctx---upload--req', ctx.request.files);
     const { name } = ctx.request.body;
     const { files: { file } } = ctx.request;
     // const result = upload2(ctx);
-    const path = `${baseUploadUrl}${file.name}`;
+    const time = Moment().format('YYYY-MM-DD');
+    const url = `${baseUploadUrl}${time}/${file.name}`;
     const {
       userId
     } = await getUserInfo(ctx);
@@ -112,7 +117,7 @@ class resourceController {
       userId,
       name,
       md5Name: file.name,
-      url: path
+      url
     }).save();
 
     ctx.data({

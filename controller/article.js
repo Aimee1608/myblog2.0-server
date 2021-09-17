@@ -99,6 +99,8 @@ class articleController {
     const list = await Promise.all(result.docs.map((item) => new Promise((resolve) => {
       getCountById(item._id).then((counts) => {
         const data = JSON.parse(JSON.stringify(item));
+        const str = data.content.slice(0, 400).split('```')[0];
+        data.content = str;
         resolve({ ...data, ...counts });
       });
     })));
@@ -152,7 +154,7 @@ class articleController {
       userId = userInfo.userId;
     }
     const logId = getLogId(ctx);
-    const hasBrowse = await Browse.find({ logId, articleId: id });
+    const hasBrowse = await Browse.findOne({ logId, articleId: id });
     if (!hasBrowse) {
       await new Browse({
         articleId: id,

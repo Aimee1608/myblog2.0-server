@@ -10,7 +10,9 @@ const mongodb = require('./mongodb');
 const corsOpt = require('./middlewares/corsOpt');
 const data = require('./middlewares/data');
 const catchError = require('./middlewares/catch');
-const { getUploadFileName, checkDirExist } = require('./utils/upload');
+const {
+  getUploadFileName, checkDirExist, getDir, getTimeDir
+} = require('./utils/upload');
 
 const app = new Koa();
 // 连接数据库
@@ -22,7 +24,7 @@ app.use(koaBody({
   multipart: true,
   // encoding: 'gzip',
   formidable: {
-    uploadDir: path.join(__dirname, 'public/resources'), // 设置文件上传目录
+    uploadDir: getDir(), // 设置文件上传目录
     keepExtensions: true, // 保持文件的后缀
     maxFieldsSize: 2 * 1024 * 1024, // 文件上传大小
     hash: 'md5',
@@ -30,7 +32,8 @@ app.use(koaBody({
       // console.log(`name: ${name}`);
       // console.log(file);
       const md5Name = getUploadFileName(file.name);
-      const dir = path.join(__dirname, 'public/resources');
+      const dir = getTimeDir();
+      // console.log('dir', dir);
       checkDirExist(dir);
       // console.log('{file.hash', file.hash);
       file.name = md5Name;
@@ -43,7 +46,7 @@ app.use(koaBody({
 }));
 app.use(data);
 app.use(Static(
-  path.join(__dirname, 'public')
+  path.resolve(__dirname, '../public')
 ));
 // app.use(bodyParser());
 // 默认控制台输出logger

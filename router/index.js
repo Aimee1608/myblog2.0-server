@@ -60,6 +60,7 @@ router.post('/love/add', love.add);
 router.get('/resource/getList', checkToken, resource.getList);
 // router.post('/resource/upload', checkToken, upload.single('face'), resource.upload);
 router.post('/resource/upload', checkToken, resource.upload);
+router.post('/resource/delete', checkToken, resource.delete);
 
 router.get('/tags/getList', tags.getList);
 router.get('/tags/getAllList', tags.getAllList);
