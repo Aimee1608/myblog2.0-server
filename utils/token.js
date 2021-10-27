@@ -80,7 +80,8 @@ module.exports.setTokenCookie = (ctx, token) => {
     {
       maxAge: 10 * 24 * 60 * 60 * 1000, // cookie有效时
       httpOnly: false,
-      overwirte: false
+      overwirte: false,
+      domain: '.mangoya.cn'
     }
   );
   // console.log('ctx.cookies', ctx.cookies.get(config.tokenName));
