@@ -14,7 +14,7 @@ class authController {
     console.log('code----', code);
     const token = await getAccessToken(code);
     console.log('token', token);
-    ctx.cookies.set('id', 1);
+
     if (token) {
       const userInfo = await getUserInfo(token);
       console.log('userInfo', userInfo);
@@ -50,7 +50,7 @@ class authController {
             label: getUserLabel()
           }).save();
         }
-        console.log('res---', res);
+        // console.log('res---', res);
         if (res) {
           const jwtToken = createToken({
             _id: res._id,

@@ -62,7 +62,8 @@ module.exports.deleteTokenCookie = (ctx) => {
     '', // value
     {
       maxAge: 0, // cookie有效时
-      httpOnly: false
+      httpOnly: false,
+      domain: '.mangoya.cn'
     }
   );
 };
