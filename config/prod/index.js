@@ -7,10 +7,10 @@ module.exports = {
     url: 'https://github.com/login/oauth/access_token',
     client_id: '7a79cb87ff58020bc1ff',
     client_secret: 'db7a2b1e41ffc6a65f487f40e583011393b59d1e',
-    redirect_uri: 'http://mangoya.cn',
-    redirect_admin: 'http://mangoya.cn/admin2.0/',
+    redirect_uri: 'https://mangoya.cn',
+    redirect_admin: 'https://mangoya.cn/admin2.0/',
     userUrl: 'https://api.github.com/user',
-    login_url: 'http://mangoya.cn/v1/user/login'
+    login_url: 'https://mangoya.cn/v1/user/login'
   },
   jwt: {
     tokenName: 'aimee-blog-token',
@@ -25,5 +25,5 @@ module.exports = {
     password: 'small_root',
     rs_name: ''
   },
-  baseUploadUrl: 'http://mangoya.cn/v1/resources/'
+  baseUploadUrl: 'https://mangoya.cn/v1/resources/'
 };

@@ -2,7 +2,9 @@ module.exports = async (ctx, next) => {
   // cors跨域拦截器 3100-server 3200-admin 3300-front
   const allowedOrigins = [
     'http://mangoya.cn',
-    'http://www.mangoya.cn'
+    'http://www.mangoya.cn',
+    'https://mangoya.cn',
+    'https://www.mangoya.cn'
   ];
   const origin = ctx.request.headers.origin || '';
   const env = process.env.NODE_ENV || 'dev';

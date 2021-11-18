@@ -20,7 +20,7 @@ module.exports.getAccessToken = (code) => new Promise(async (resolve) => {
         Accept: 'application/json'
       }
     });
-    console.log('res--data', res);
+    console.log('res--data', res.data);
     // const result = data;
     if (res && res.data) {
       resolve(res.data);
