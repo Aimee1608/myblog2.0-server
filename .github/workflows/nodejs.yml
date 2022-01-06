@@ -1,42 +1,54 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
-
+name: myblog2.0-server
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-  schedule:
-    - cron: '0 2 * * *'
+  push: 
+    tags:
+      - 'v*'
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [10]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-
+  build-and-deploy:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout Git Source
-      uses: actions/checkout@v2
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    # 下载源码
+    - name: Checkout
+      uses: actions/checkout@master
+    # 打包构建
+    - name: Build
+      uses: actions/setup-node@master
+    - run: tar -zcvf release.tgz ./ --exclude .git --exclude node_modules --exclude
+   # 发布 Release
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Install Dependencies
-      run: npm i -g npminstall && npminstall
-
-    - name: Continuous Integration
-      run: npm run ci
-
-    - name: Code Coverage
-      uses: codecov/codecov-action@v1
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    # 上传构建结果到 Release
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+
+        asset_path: ./release.tgz
+        asset_name: release.tgz
+        asset_content_type: application/x-tgz
+    # 部署到服务器
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /home/www/Aimee/myblog2.0-server
+          wget https://github.com/Aimee1608/myblog2.0-server/releases/latest/download/release.tgz -O release.tgz
+          tar zxvf release.tgz
+          npm install
+          npm run pm2:prod
