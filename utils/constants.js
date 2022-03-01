@@ -10,18 +10,13 @@ module.exports = Object.freeze({
   CUSTOM_CODE: {
     SOME_CUSTOM_ERROR: 1001
   },
-  USER_TAG: [
-    '天然呆',
-    '小萌新',
-    '学霸',
-    '萌萌哒',
-    '技术宅',
-    '忠实粉'
-  ],
+  USER_TAG: ['天然呆', '小萌新', '学霸', '萌萌哒', '技术宅', '忠实粉'],
   DEFAULT_NAME: {
     reward: '赞赏',
     aboutme: '关于我',
     message: '留言板',
     friendslink: '友链'
-  }
-});
+  },
+  GITHUB: 'github',
+  WEIBO: 'weibo'
+})

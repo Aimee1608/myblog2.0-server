@@ -1,15 +1,11 @@
-const mongoose = require('mongoose');
-const Collect = require('../model/collect');
-const {
-  isValidObjectId
-} = require('../utils/tool');
-const { getUserInfo } = require('../utils/user');
+const mongoose = require('mongoose')
+const Collect = require('../model/collect')
+const { isValidObjectId } = require('../utils/tool')
+const { getUserInfo } = require('../utils/user')
 
 class collectController {
   static async getList(ctx) {
-    const {
-      currentPage = 1, pageSize = 10, keywords = '', state = 1
-    } = ctx.query;
+    const { currentPage = 1, pageSize = 10, keywords = '', state = 1 } = ctx.query
     // 过滤条件
     const options = {
       title: {
@@ -20,28 +16,31 @@ class collectController {
       }, // 按id倒序
       page: Number(currentPage), // 当前页
       limit: Number(pageSize) // 每页数
-    };
+    }
     // 参数
-    const querys = { state };
+    const querys = { state }
 
     if (keywords) {
       if (isValidObjectId(keywords)) {
-        querys.$or = [{
-          _id: mongoose.Types.ObjectId(keywords)
-        }];
-      } else {
-        querys.$or = [{
-          title: {
-            $regex: keywords
-          },
-          description: {
-            $regex: keywords
+        querys.$or = [
+          {
+            _id: mongoose.Types.ObjectId(keywords)
           }
-        }];
+        ]
+      } else {
+        querys.$or = [
+          {
+            title: {
+              $regex: keywords
+            },
+            description: {
+              $regex: keywords
+            }
+          }
+        ]
       }
     }
-    const result = await Collect
-      .paginate(querys, options);
+    const result = await Collect.paginate(querys, options)
     const data = {
       pagination: {
         currentPage: result.page, // 当前页
@@ -50,42 +49,38 @@ class collectController {
         total: result.total // 总条数
       },
       list: result.docs
-    };
-    ctx.data({ data });
+    }
+    ctx.data({ data })
   }
 
   static async edit(ctx) {
-    const { id, value } = ctx.request.body;
-    console.log('id', id);
-    const {
-      userId
-    } = await getUserInfo(ctx);
+    const { id, value } = ctx.request.body
+    // console.log('id', id);
+    const { userId } = await getUserInfo(ctx)
     if (value) {
       const res = await new Collect({
         userId,
         articleId: id
-      }).save();
+      }).save()
     } else {
       const res = await Collect.findOneAndRemove({
         userId,
         articleId: id
-      });
+      })
     }
-    ctx.data({ data: {} });
+    ctx.data({ data: {} })
   }
 
   static async getInfo(ctx) {
-    const { id } = ctx.query;
-    const {
-      userId
-    } = await getUserInfo(ctx);
+    const { id } = ctx.query
+    const { userId } = await getUserInfo(ctx)
     // const userId = 'Aimee1608';
-    const res = await Collect.findOne({ articleId: id, userId });
+    const res = await Collect.findOne({ articleId: id, userId })
     if (res) {
-      ctx.data({ data: res });
+      ctx.data({ data: res })
     } else {
-      ctx.data({ data: {} });
+      ctx.data({ data: {} })
     }
   }
 }
-module.exports = collectController;
+module.exports = collectController

@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
+const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate')
+// github
 // {
 //   login: 'Aimee1608',
 //   id: 21167450,
@@ -34,6 +35,52 @@ const mongoosePaginate = require('mongoose-paginate');
 //   created_at: '2016-08-22T06:07:35Z',
 //   updated_at: '2021-07-27T14:30:13Z'
 // }
+//  微博
+// {
+//   "id": 1404376560,
+//   "screen_name": "zaku",
+//   "name": "zaku",
+//   "province": "11",
+//   "city": "5",
+//   "location": "北京 朝阳区",
+//   "description": "人生五十年，乃如梦如幻；有生斯有死，壮士复何憾。",
+//   "url": "http://blog.sina.com.cn/zaku",
+//   "profile_image_url": "http://tp1.sinaimg.cn/1404376560/50/0/1",
+//   "domain": "zaku",
+//   "gender": "m",
+//   "followers_count": 1204,
+//   "friends_count": 447,
+//   "statuses_count": 2908,
+//   "favourites_count": 0,
+//   "created_at": "Fri Aug 28 00:00:00 +0800 2009",
+//   "following": false,
+//   "allow_all_act_msg": false,
+//   "geo_enabled": true,
+//   "verified": false,
+//   "status": {
+//       "created_at": "Tue May 24 18:04:53 +0800 2011",
+//       "id": 11142488790,
+//       "text": "我的相机到了。",
+//       "source": "<a href="http://weibo.com" rel="nofollow">新浪微博</a>",
+//       "favorited": false,
+//       "truncated": false,
+//       "in_reply_to_status_id": "",
+//       "in_reply_to_user_id": "",
+//       "in_reply_to_screen_name": "",
+//       "geo": null,
+//       "mid": "5610221544300749636",
+//       "annotations": [],
+//       "reposts_count": 5,
+//       "comments_count": 8
+//   },
+//   "allow_all_comment": true,
+//   "avatar_large": "http://tp1.sinaimg.cn/1404376560/180/0/1",
+//   "verified_reason": "",
+//   "follow_me": false,
+//   "online_status": 0,
+//   "bi_followers_count": 215
+// }
+
 const userSchema = new mongoose.Schema({
   userId: {
     type: String,
@@ -84,6 +131,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  origin: {
+    type: String,
+    required: false
+  },
   // 发布日期
   createDate: {
     type: Date,
@@ -103,9 +154,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: 3
   } // 用户权限 3为普通用户 2为管理员 1为超级管理员
-});
-userSchema.plugin(mongoosePaginate);
+})
+userSchema.plugin(mongoosePaginate)
 // mongoose 会自动把表名变成复数
 // 想要指定collection的名称，需要设置第三个参数
 // mongoose.model 执行在数据库创建表的操作
-module.exports = mongoose.model('user', userSchema, 'user');
+module.exports = mongoose.model('user', userSchema, 'user')

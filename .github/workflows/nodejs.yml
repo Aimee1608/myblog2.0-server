@@ -15,40 +15,21 @@ jobs:
     - name: Build
       uses: actions/setup-node@master
     - run: tar -zcvf release.tgz bin config controller data middlewares model mongodb router utils .editorconfig .eslintrc.js index.js nodemon.json package-lock.json package.json
-   # 发布 Release
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-    # 上传构建结果到 Release
-    - name: Upload Release Asset
-      id: upload-release-asset
-      uses: actions/upload-release-asset@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
 
-        asset_path: ./release.tgz
-        asset_name: release.tgz
-        asset_content_type: application/x-tgz
     # 部署到服务器
     - name: Deploy
-      uses: appleboy/ssh-action@master
+      uses: cross-the-world/ssh-scp-ssh-pipelines@lastest
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: |
-          cd /home/www/Aimee/myblog2.0-server
-          wget https://github.com/Aimee1608/myblog2.0-server/releases/latest/download/release.tgz -O release.tgz
-          tar zxvf release.tgz
-          npm install
-          npm run pm2:prod
+        connect_timeout: 60s
+        first_ssh: |
+            cd /home/www/Aimee/myblog2.0-server
+         scp: |
+           './release.tgz' => /home/www/Aimee/myblog2.0-server
+         last_ssh: |
+            tar zxvf release.tgz 
+            npm install
+            npm run pm2:prod

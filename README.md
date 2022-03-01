@@ -1,33 +1,31 @@
 # myblog2.0-server
 
-
-
 ## QuickStart
 
 <!-- add docs here for user -->
-
-see [egg docs][egg] for more detail.
 
 ### Development
 
 ```bash
 $ npm i
-$ npm run dev
-$ open http://localhost:7001/
+$ npm run start
+$ open http://localhost:8899/
 ```
 
-### Deploy
+host:
 
 ```bash
-$ npm start
-$ npm stop
+127.0.0.1 aimeeserver.mangoya.cn
+127.0.0.1 aimeeadmin.mangoya.cn
+127.0.0.1 aimeeblog.mangoya.cn
 ```
 
-### npm scripts
+### 接入微博授权登录
 
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
+1. 先在微博开放平台完善个人信息，并做个人身份认证
+2. 创建我的应用，完善应用信息，提交审核
+3. 填写 oauth2 的授权地址信息
+4. 审核通过前，填写测试账号调试
 
-
-[egg]: https://eggjs.org
+文档地址：https://open.weibo.com/wiki/%E6%8E%88%E6%9D%83%E6%9C%BA%E5%88%B6#.E6.8E.88.E6.9D.83.E6.9C.89.E6.95.88.E6.9C.9F
+我的应用中心：https://open.weibo.com/apps
