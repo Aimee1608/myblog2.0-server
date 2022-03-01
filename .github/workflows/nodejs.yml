@@ -19,6 +19,9 @@ jobs:
     # 部署到服务器
     - name: Deploy
       uses:  cross-the-world/ssh-scp-ssh-pipelines@latest
+      env:
+          WELCOME: "ssh scp ssh pipelines"
+          LASTSSH: "Doing something after copying"
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
