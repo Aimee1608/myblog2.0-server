@@ -18,7 +18,7 @@ jobs:
 
     # 部署到服务器
     - name: Deploy
-      uses: cross-the-world/ssh-scp-ssh-pipelines@lastest
+      uses:  cross-the-world/ssh-scp-ssh-pipelines@latest
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
