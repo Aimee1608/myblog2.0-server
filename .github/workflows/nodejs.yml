@@ -18,14 +18,14 @@ jobs:
 
     # 部署到服务器
     - name: Deploy
-      uses:  cross-the-world/ssh-scp-ssh-pipelines@latest
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
       env:
           WELCOME: "ssh scp ssh pipelines"
           LASTSSH: "Doing something after copying"
       with:
         host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        user: ${{ secrets.USERNAME }}
+        pass: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         connect_timeout: 60s
         first_ssh: |
