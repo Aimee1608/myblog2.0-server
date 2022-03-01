@@ -30,6 +30,7 @@ jobs:
          scp: |
            './release.tgz' => /home/www/Aimee/myblog2.0-server
          last_ssh: |
+            cd /home/www/Aimee/myblog2.0-server
             tar zxvf release.tgz 
             npm install
             npm run pm2:prod
