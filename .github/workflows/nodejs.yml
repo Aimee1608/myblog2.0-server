@@ -52,12 +52,6 @@ jobs:
           pass: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           connect_timeout: 60s
-          first_ssh: |
-
-          scp: |
-            './release.tgz' => /home/www/Aimee/myblog2.0-server
           last_ssh: |
             cd /home/www/Aimee/myblog2.0-server
-            tar -zxvf release.tgz 
-            npm install
-            npm run pm2:prod
+            ls
