@@ -29,7 +29,7 @@ exports.isAdminUser = async ctx => {
   if (!isInvalid) {
     throw new CustomError(500, '用户不存在')
   }
-  if (userObj.userId !== 'Aimee1608') {
+  if (!(userObj.userId == 'Aimee1608' || userObj.userId == 2242812941)) {
     throw new CustomError(401, '无权限')
   }
   return isInvalid
