@@ -53,7 +53,7 @@ jobs:
           port: ${{ secrets.PORT }}
           connect_timeout: 60s
           first_ssh: |
-            cd /home/www/Aimee/myblog2.0-server
+
           scp: |
             './release.tgz' => /home/www/Aimee/myblog2.0-server
           last_ssh: |
