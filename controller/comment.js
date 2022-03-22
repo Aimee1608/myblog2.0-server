@@ -207,40 +207,46 @@ class CommentController {
     const querys = { state: 1, parentId: null }
     const result = await Comment.paginate(querys, options)
     const { docs } = result
-    const list = await Promise.all(
+    let list = await Promise.all(
       docs.map(
         item =>
           new Promise(async resolve => {
             const { userId, content, createDate, articleId } = JSON.parse(JSON.stringify(item))
             console.log('getTopComment---->', articleId)
             const { username, avatar } = (await User.findOne({ userId })) || { userId }
-            let title
-            let isArticle
-            if (DEFAULT_NAME[articleId]) {
-              title = DEFAULT_NAME[articleId]
-              isArticle = false
-            } else {
-              console.log('getTopComment---->article', articleId)
-              const articleInfo = await Article.findOne({ _id: articleId })
-              console.log('getTopComment---->articleInfo', articleInfo)
-              title = articleInfo.title
-              isArticle = true
-            }
 
-            const newItem = {
-              articleId,
-              userId,
-              content,
-              createDate,
-              username,
-              avatar,
-              title,
-              isArticle
+            try {
+              let title
+              let isArticle
+              if (DEFAULT_NAME[articleId]) {
+                title = DEFAULT_NAME[articleId]
+                isArticle = false
+              } else {
+                console.log('getTopComment---->article', articleId)
+                const articleInfo = (await Article.findOne({ _id: articleId })) || {}
+                console.log('getTopComment---->articleInfo', articleInfo.title)
+                title = articleInfo.title
+                isArticle = true
+              }
+
+              const newItem = {
+                articleId,
+                userId,
+                content,
+                createDate,
+                username,
+                avatar,
+                title,
+                isArticle
+              }
+              resolve(newItem)
+            } catch (e) {
+              resolve(null)
             }
-            resolve(newItem)
           })
       )
     )
+    list = list.filter(item => item != null)
     const articleList = await Browse.find().distinct('articleId').exec()
     console.log('getTopComment---->browseList')
     let browseList = await Promise.all(
