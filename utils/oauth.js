@@ -15,7 +15,7 @@ function getAccessTokenGithub(code) {
         method: 'POST',
         // proxy: {
         //   host: '127.0.0.1',
-        //   port: 4780
+        //   port: 7890
         // },
         headers: {
           Accept: 'application/json'

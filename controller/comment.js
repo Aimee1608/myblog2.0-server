@@ -212,6 +212,7 @@ class CommentController {
         item =>
           new Promise(async resolve => {
             const { userId, content, createDate, articleId } = JSON.parse(JSON.stringify(item))
+            console.log('getTopComment---->', articleId)
             const { username, avatar } = (await User.findOne({ userId })) || { userId }
             let title
             let isArticle
@@ -219,7 +220,9 @@ class CommentController {
               title = DEFAULT_NAME[articleId]
               isArticle = false
             } else {
+              console.log('getTopComment---->article', articleId)
               const articleInfo = await Article.findOne({ _id: articleId })
+              console.log('getTopComment---->articleInfo', articleInfo)
               title = articleInfo.title
               isArticle = true
             }
@@ -239,6 +242,7 @@ class CommentController {
       )
     )
     const articleList = await Browse.find().distinct('articleId').exec()
+    console.log('getTopComment---->browseList')
     let browseList = await Promise.all(
       articleList.map(
         item =>

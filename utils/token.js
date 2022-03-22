@@ -1,61 +1,58 @@
-const jwt = require('jsonwebtoken');
-const {
-  jwt: config
-} = require('../config');
-const constants = require('./constants');
-const {
-  CustomError
-} = require('./customError');
+const jwt = require('jsonwebtoken')
+const { jwt: config } = require('../config')
+const constants = require('./constants')
+const { CustomError } = require('./customError')
 
-module.exports.createToken = ({
-  _id,
-  userId
-}) => {
-  const token = jwt.sign({
-    _id,
-    userId
-  }, config.tokenSecret, {
-    expiresIn: config.expiresIn
-  });
-  return token;
-};
+module.exports.createToken = ({ _id, userId }) => {
+  const token = jwt.sign(
+    {
+      _id,
+      userId
+    },
+    config.tokenSecret,
+    {
+      expiresIn: config.expiresIn
+    }
+  )
+  return token
+}
 
-module.exports.decodeToken = (ctx) => {
-  const token = ctx.cookies.get(config.tokenName);
+module.exports.decodeToken = ctx => {
+  const token = ctx.cookies.get(config.tokenName)
   // console.log('decodeToken', token);
-  const userObj = jwt.decode(token, config.tokenSecret);
-  return userObj;
-};
+  const userObj = jwt.decode(token, config.tokenSecret)
+  return userObj
+}
 
 module.exports.checkToken = async (ctx, next) => {
   // console.log(ctx.request.body);
-  const token = ctx.cookies.get(config.tokenName);
+  const token = ctx.cookies.get(config.tokenName)
   if (token) {
     try {
-      jwt.verify(token, config.tokenSecret);
-      console.log('token有效===');
+      jwt.verify(token, config.tokenSecret)
+      console.log('token有效===')
     } catch (error) {
-      console.log('error', error);
-      ctx.status = constants.HTTP_CODE.UNAUTHORIZED;
-      ctx.body = 'token 过期';
+      console.log('error', error)
+      ctx.status = constants.HTTP_CODE.UNAUTHORIZED
+      ctx.body = 'token 过期'
     }
     if (ctx.status === constants.HTTP_CODE.UNAUTHORIZED) {
-      return;
+      return
     }
     try {
-      await next();
+      await next()
     } catch (error) {
-      console.log('error===', error);
-      throw new CustomError(error.code, error.msg);
+      console.log('error===', error)
+      throw new CustomError(error.code, error.msg)
     }
   } else {
-    ctx.status = constants.HTTP_CODE.UNAUTHORIZED;
-    ctx.body = '无 token，请登录';
+    ctx.status = constants.HTTP_CODE.UNAUTHORIZED
+    ctx.body = '无 token，请登录'
   }
-};
+}
 
 // 清除token
-module.exports.deleteTokenCookie = (ctx) => {
+module.exports.deleteTokenCookie = ctx => {
   // const token = ctx.cookies.get(config.tokenName);
   ctx.cookies.set(
     config.tokenName, // name
@@ -65,8 +62,8 @@ module.exports.deleteTokenCookie = (ctx) => {
       httpOnly: false,
       domain: '.mangoya.cn'
     }
-  );
-};
+  )
+}
 
 module.exports.setTokenCookie = (ctx, token) => {
   // domain：写入cookie所在的域名
@@ -84,6 +81,6 @@ module.exports.setTokenCookie = (ctx, token) => {
       overwirte: false,
       domain: '.mangoya.cn'
     }
-  );
+  )
   // console.log('ctx.cookies', ctx.cookies.get(config.tokenName));
-};
+}
