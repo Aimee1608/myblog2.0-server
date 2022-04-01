@@ -14,7 +14,9 @@ jobs:
       # 打包构建
       - name: Build
         uses: actions/setup-node@master
-      - run: tar -zcvf release.tgz src nodemon.json package-lock.json package.json tsconfig.json tslint.json pm2.config.json
+      - run: npm install
+      - run: npm run build
+      - run: tar -zcvf release.tgz src dist nodemon.json package-lock.json package.json tsconfig.json tslint.json pm2.config.json
 
         # 发布 Release
       - name: Create Release
@@ -59,5 +61,4 @@ jobs:
             cd /home/www/Aimee/myblog2.0-server
             tar -zxvf release.tgz 
             npm install --no-optional
-            npm run build
             npm run pm2:prod
