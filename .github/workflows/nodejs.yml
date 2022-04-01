@@ -59,4 +59,5 @@ jobs:
             cd /home/www/Aimee/myblog2.0-server
             tar -zxvf release.tgz 
             npm install
+            npm run build
             npm run pm2:prod
