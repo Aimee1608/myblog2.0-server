@@ -1,7 +1,7 @@
 import * as path from "path";
 import fs from 'fs';
 import md5 from 'md5';
-import Moment from 'Moment';
+import Moment from 'moment';
 
 
 export const getUploadFileName = (name: string) => {
