@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env NODE_ENV=dev nodemon index.js",
-    "start:prod": "cross-env NODE_ENV=prod nodemon index.js",
-    "pm2:dev": "cross-env NODE_ENV=prod NODE_LOG_DIR=/tmp ENABLE_NODE_LOG=YES pm2 start ./bin/pm2.config.json",
-    "pm2:prod": "cross-env NODE_ENV=prod NODE_LOG_DIR=/tmp ENABLE_NODE_LOG=YES pm2 start ./bin/pm2.config.json"
+    "start:ts": "ts-node ./src/index.ts",
+    "start": "cross-env NODE_ENV=dev nodemon --watch src/**/* -e ts,tsx --exec ts-node ./src/index.ts",
+    "start:prod": "cross-env NODE_ENV=prod nodemon ./dist/src/index.js",
+    "build":"tsc",
+    "pm2:dev": "cross-env NODE_ENV=prod  pm2 start pm2.config.json",
+    "pm2:prod": "cross-env NODE_ENV=prod NODE_LOG_DIR=/tmp ENABLE_NODE_LOG=YES pm2 start ./pm2.config.json"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
@@ -29,11 +31,22 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/koa": "^2.13.4",
+    "@types/koa-logger": "^3.1.2",
+    "@types/koa-router": "^7.4.4",
+    "@types/koa-static": "^4.0.2",
+    "@types/koa__cors": "^3.1.1",
+    "@types/md5": "^2.3.2",
+    "@types/mongoose-paginate": "^5.0.11",
+    "@types/node": "^17.0.23",
     "cross-env": "^7.0.3",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.23.4",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.7.0",
+    "tslint": "^6.1.3",
+    "tslint-config-standard": "^9.0.0",
+    "typescript": "^4.6.3"
   },
   "author": "aimee",
   "license": "MIT"

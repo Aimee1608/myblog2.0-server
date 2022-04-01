@@ -14,7 +14,7 @@ jobs:
       # 打包构建
       - name: Build
         uses: actions/setup-node@master
-      - run: tar -zcvf release.tgz bin config controller data middlewares model mongodb router utils  .eslintrc.js index.js nodemon.json package-lock.json package.json
+      - run: tar -zcvf release.tgz src nodemon.json package-lock.json package.json tsconfig.json tslint.json pm2.config.json
 
         # 发布 Release
       - name: Create Release

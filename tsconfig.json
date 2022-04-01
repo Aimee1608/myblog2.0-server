@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "esnext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "module": "commonjs" /* Specify what module code is generated. */,
+    "moduleResolution": "node",
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,
+    // "preserveSymlinks": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
+    // "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    "sourceMap": false,
+    // "strict": true /* Enable all strict type-checking options. */,
+    // "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "outDir": "dist", // TS文件编译后会放入到此文件夹内
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*", "src/types/*"]
+    }
+  },
+  "include": ["src/**/*", ".eslintrc.js"],
+  "exclude": ["node_modules", "dist"]
+}
